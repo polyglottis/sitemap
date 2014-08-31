@@ -8,6 +8,6 @@ This packages builds on github.com/gorilla/mux to make sitemap creation easy.
 License
 =======
 
-polyglottis/sitemap is licensed under the MIT License.
+polyglottis/sitemap is licensed under the [https://github.com/polyglottis/sitemap/blob/master/LICENSE.md](MIT License).
 
 gorilla/mux is licensed under the New BSD License.
