@@ -139,16 +139,18 @@ func TestDynamic(t *testing.T) {
 	}
 }
 
-func TestDoc(t *testing.T) {
+func TestPackageDocumentation(t *testing.T) {
 	dir, err := ioutil.TempDir("", "sitemap")
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer os.RemoveAll(dir)
 
-	r := NewRouter(mux.NewRouter(), "http://example.com", dir)
+	r := /* sitemap. */ NewRouter(mux.NewRouter(), "http://example.com", dir)
 
-	r.Register("/my/static/route")
+	r.Register("/my/static/route") // .Handler(handler)
+
+	// r.HandleFunc("/my/secret/route", f)
 
 	documents := []struct {
 		Category string
@@ -172,9 +174,10 @@ func TestDoc(t *testing.T) {
 			}
 		}
 		return nil
-	})
+	}) // .Handler(h)
 
 	handler := r.HandleSitemaps()
+	// http.Handle("/", r)
 
 	req, err := http.NewRequest("GET", "http://example.com/sitemapindex.xml", nil)
 	if err != nil {

@@ -5,15 +5,15 @@ import (
 	"time"
 )
 
-// Schema is an XML schema.
+// Schema represents an XML schema.
 type Schema struct {
 	Xmlns             string `xml:"xmlns,attr"`
 	XmlnsXsi          string `xml:"xmlns:xsi,attr"`
 	XsiSchemaLocation string `xml:"xsi:schemaLocation,attr"`
 }
 
-// Schema_0_9 is the sitemap schema.
-var Schema_0_9 = Schema{
+// SitemapSchema is the XML schema used for sitemaps.
+var SitemapSchema = &Schema{
 	Xmlns:             "http://www.sitemaps.org/schemas/sitemap/0.9",
 	XmlnsXsi:          "http://www.w3.org/2001/XMLSchema-instance",
 	XsiSchemaLocation: "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
@@ -37,7 +37,7 @@ const (
 // Call NewSitemap() to get a new sitemap with the correct XML schema, ready to get encoded.
 type Sitemap struct {
 	XMLName xml.Name `xml:"urlset"`
-	Schema
+	*Schema
 	Entries []*Entry `xml:"url"`
 }
 
@@ -54,7 +54,7 @@ type Entry struct {
 	Priority        *float64        `xml:"priority,omitempty"`   // optional
 }
 
-// NewSitemap creates an empty sitemap with the schema set as Schema_0_9.
+// NewSitemap creates an empty sitemap with the schema set as SitemapSchema.
 func NewSitemap() *Sitemap {
 	return &Sitemap{
 		Schema: Schema_0_9,

@@ -2,9 +2,9 @@
 Package sitemap allows dynamic generation of a sitemap.
 This package allows to:
 
-	1. Register routes when binding handlers (composing on github.com/gorilla/mux.Router),
+	1. Register routes when binding handlers (embedding a github.com/gorilla/mux.Router),
 	2. Create a sitemap on request (lazy-creation),
-	3. Update the sitemap regularly (use sitemap.Tick).
+	3. Update the sitemap regularly and thread-safely.
 
 The sitemap is stored (=cached) in XML format on disk, and served directly from there.
 
@@ -12,11 +12,15 @@ Example of use:
 
 1. Create the router:
 
-  	r := NewRouter(mux.NewRouter(), "http://example.com", "local/path/to/sitemaps/cache")
+  	r := sitemap.NewRouter(mux.NewRouter(), "http://example.com", "local/path/to/sitemaps/cache")
 
 2. Static route handler:
 
 		r.Register("/my/static/route").Handler(handler)
+
+... or a secret route (i.e. not appearing in the sitemap):
+
+		r.HandleFunc("/my/secret/route", f)
 
 3. Parameterized route:
 
@@ -47,6 +51,7 @@ Example of use:
 4. Handle sitemap requests:
 
     r.HandleSitemaps()
+    http.Handle("/", r)
 
 So that an http GET on (r.Options.ServerPath + "sitemapindex.xml") returns:
 
@@ -90,8 +95,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Router composes on github.com/gorilla/mux.Router.
-// As such, it retains all functionalities of the router
+// Router has an embedded github.com/gorilla/mux.Router.
+// It retains all functionalities of the router (unchanged)
 // and has a few extra methods to register the routes which should belong to the sitemap.
 //
 // See Register(), RegisterParam() and HandleSitemaps().

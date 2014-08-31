@@ -14,7 +14,7 @@ type SitemapIndex struct {
 }
 
 // SitemapIndexSchema is the XML schema used for sitemap indexes.
-var SitemapIndexSchema = Schema{
+var SitemapIndexSchema = &Schema{
 	Xmlns:             "http://www.sitemaps.org/schemas/sitemap/0.9",
 	XmlnsXsi:          "http://www.w3.org/2001/XMLSchema-instance",
 	XsiSchemaLocation: "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd",

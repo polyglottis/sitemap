@@ -4,14 +4,18 @@ import (
 	"fmt"
 )
 
+// Buffer is a sitemap buffer.
+//
+// When the current sitemap is full, it is offloaded to disk, and a new empty sitemap is created.
 type Buffer struct {
 	sitemap   *Sitemap
-	count     int
+	count     int // number of sitemaps
 	domain    string
 	cachePath string
-	Locations []string
+	Locations []string // Relative path of serialized sitemaps.
 }
 
+// NewBuffer creates a new buffer for sitemaps on the given domain. The path variable is the location for serialization on Flush().
 func NewBuffer(domain, path string) *Buffer {
 	return &Buffer{
 		domain:    domain,
