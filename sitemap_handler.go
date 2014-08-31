@@ -28,6 +28,7 @@ func (sh *sitemapHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			// check if sitemap index file exists
 			_, err := os.Open(sh.router.Options.CachePath + "sitemapindex.xml")
 			if err != nil {
+				os.MkdirAll(sh.router.Options.CachePath, os.ModeDir|os.ModePerm)
 				_, err = sh.router.GenerateSitemaps()
 				if err != nil {
 					panic(err)

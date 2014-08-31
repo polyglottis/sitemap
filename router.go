@@ -255,9 +255,14 @@ func (r *Router) GenerateSitemaps() ([]string, error) {
 //     r.Options.ServerPath + "sitemapindex.xml"
 //     r.Options.ServerPath + "sitemap_%d.xml" // where %d is a replaced by a positive integer.
 func (r *Router) HandleSitemaps() http.Handler {
-	sitemapHandler := &sitemapHandler{
+	sitemapHandler := r.SitemapHandler()
+	r.Handle(r.Options.ServerPath+`{file:sitemap(index|_\d+)\.xml}`, sitemapHandler)
+	return sitemapHandler
+}
+
+// SitemapHandler creates and returns a new http.Handler for sitemaps. It expects to serve r,Options.ServerPath + `{file:sitemap(index|_\d+)\.xml}`.
+func (r *Router) SitemapHandler() http.Handler {
+	return &sitemapHandler{
 		router: r,
 	}
-	r.Handle(r.Options.ServerPath+"{file:sitemap(index|_\\d+)\\.xml}", sitemapHandler)
-	return sitemapHandler
 }
