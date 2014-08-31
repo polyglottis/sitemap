@@ -57,7 +57,7 @@ type Entry struct {
 // NewSitemap creates an empty sitemap with the schema set as SitemapSchema.
 func NewSitemap() *Sitemap {
 	return &Sitemap{
-		Schema: Schema_0_9,
+		Schema: SitemapSchema,
 	}
 }
 

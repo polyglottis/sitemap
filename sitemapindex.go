@@ -9,7 +9,7 @@ import (
 // SitemapIndex is a sitemap index with xml-encoding attributes.
 type SitemapIndex struct {
 	XMLName xml.Name `xml:"sitemapindex"`
-	Schema
+	*Schema
 	SitemapRefs []*FileReference `xml:"sitemap"`
 }
 
